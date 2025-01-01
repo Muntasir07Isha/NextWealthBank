@@ -14,48 +14,42 @@ type Recipient = {
     id: number;
     name: string;
   };
+type QuickPayProps = {
+  accounts: Account[];
+  onTransaction: (firstAccount:string,amount:number) => void;
+}
   
 
-export default function QuickPay(){
-  const [accounts, setAccounts] = useState<Account[]>([])
+export default function QuickPay({ accounts, onTransaction }: QuickPayProps){
   const [formAccount, setFormAccount] = useState<string>("");
   const [toAccount, setToAccount] = useState<string>("");
   const [amount, setAmount] = useState<string>("");
-  const [recipients, setRecipients] = useState<Recipient[]>([]);
 
-    useEffect(()=>{
-        const fetchAccounts = async()=>{
-         try{
-            const response = await fetch("/api/accounts")
-            if(!response.ok){
-                throw new Error("Server error")
-            }
-            const data: Account[] = await response.json();
-            setAccounts(data);
-         } catch(error){
-            console.error("Fail to fetch accounts", error)
-         }
-        }
-        fetchAccounts()
-    }, [])
+  const handleSubmit = () => {
+    if (!formAccount || !toAccount || !amount) {
+      alert("Please fill out all fields");
+      return;
+    }
+    if (formAccount === toAccount) {
+      alert("Cannot transfer to the same account");
+      return;
+    }
 
-//fetch reciptents from mock data
-useEffect(() => {
-    const fetchRecipients = async () => {
-      try {
-        // Mock API or hardcoded recipients
-        const mockRecipients: Recipient[] = [
-          { id: 1, name: "John Doe" },
-          { id: 2, name: "Jane Smith" },
-        ];
-        setRecipients(mockRecipients);
-      } catch (error) {
-        console.error("Failed to fetch recipients:", error);
-      }
-    };
+    const amountNumber = parseFloat(amount);
+    if (isNaN(amountNumber) || amountNumber <= 0) {
+      alert("Enter a valid amount");
+      return;
+    }
 
-    fetchRecipients();
-  }, []);
+    onTransaction(formAccount, amountNumber);
+    alert(`Transferred $${amount} from ${formAccount} to ${toAccount}`);
+
+ 
+    setFormAccount("");
+    setToAccount("");
+    setAmount("");
+  };
+
 
 return(
     <Box>
@@ -90,11 +84,8 @@ return(
           fullWidth
         >
           <MenuItem value="">Select recipient</MenuItem>
-          {recipients.map((recipient) => (
-            <MenuItem key={recipient.id} value={recipient.name}>
-              {recipient.name}
-            </MenuItem>
-          ))}
+          <MenuItem value="Recipient 1">Recipient 1</MenuItem>
+          <MenuItem value="Recipient 2">Recipient 2</MenuItem>
         </Select>
       </Box>
 
@@ -120,25 +111,10 @@ return(
             backgroundColor: "#b3e09d",
           },
         }}
-        onClick={() => {
-          if (!formAccount || !toAccount || !amount) {
-            alert("Please fill out all fields");
-            return;
-          }
-          if (formAccount === toAccount) {
-            alert("Cannot transfer to the same account");
-            return;
-          }
-          alert(`Transferred $${amount} from ${formAccount} to ${toAccount}`);
-        }}
+        onClick={handleSubmit}
       >
         Submit
       </Button>
-
-
     </Box>
-
-
 )
-
 }

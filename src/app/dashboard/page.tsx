@@ -1,8 +1,64 @@
+"use client"
 import { Box, Typography, Button } from "@mui/material";
 import QuickPay from "./quickPay";
+import { useEffect,useState } from "react";
+
+
+//define type
+type Account = {
+  id: number;
+  name: string;
+  accountNumber: string;
+  balance: number;
+  availableBalance: number;
+  username:string
+}
 
 export default function DashboardPage() {
-  return (
+    const [accounts, setAccounts] = useState<Account[]>([])
+    const [username, setUserName] = useState<string>("");
+
+
+useEffect(()=>{
+  const fetchAccounts = async () => {
+    try{
+      const response = await fetch("/api/accounts")
+      if(!response.ok){
+        throw new Error("Fail to fetch data")
+      }
+      const data:Account[] = await response.json()
+      setAccounts(data)
+      if(data.length>0){
+        setUserName(data[0].username)
+      }
+    }catch{
+      console.error("error fetching accounts",Error)
+    }
+  }
+  fetchAccounts();
+},[])
+
+//HANDLE TRASNACTION
+const handleTransaction = (fromAccountName: string, amount: number) => {
+  setAccounts((prevAccounts) =>
+    prevAccounts.map((account) => {
+      if (account.name === fromAccountName) {
+        return { ...account, balance: account.balance - amount, 
+          availableBalance: account.availableBalance - amount };
+      }
+      return account;
+    })
+  );
+};
+
+
+//calculations
+  const totalCredits = accounts.reduce((sum,account)=>sum+account.balance,0)
+  const totalDebits  = 0
+  const netPosition = totalCredits-totalDebits;
+
+  
+return (
 <Box sx={{ position: "relative", marginTop: 0, width: "100%" ,}}>
   {/* Greeting Section */}
   <Box
@@ -16,7 +72,7 @@ export default function DashboardPage() {
     }}
   >
     <Typography variant="h5" sx={{ fontWeight: "bolder", color: "black" }}>
-      Good afternoon, Muntasir
+      Good afternoon,{username || "User"}
     </Typography>
   </Box>
 
@@ -45,87 +101,59 @@ export default function DashboardPage() {
     }}>
 
       {/* Cards Section */}
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 2,
-          background: "white",
-        }}
+      <Box 
+         sx={{
+            display: "flex",
+            flexDirection: "column",
+            ap: 2,
+            background: "white",
+            }}
       >
-        {/* Smart Access Card */}
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            padding: "16px",
-            borderBottom: "1px solid #ddd",
-            bgcolor: "white",
-            borderRadius: "8px",
-          }}
-        >
-          <Box sx={{ marginRight: "16px" }}>
-            <img src="/creditcard2.svg" alt="Smart Access" width={40} height={40} />
-          </Box>
-          <Box sx={{ flexGrow: 1 }}>
-            <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-              Smart Access
-            </Typography>
-            <Typography variant="body2">046-660 1089 8201</Typography>
-          </Box>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Typography
-              variant="subtitle2"
-              sx={{ fontSize: "1.1rem", marginRight: "60px" }}
-            >
-              Balance: $8,616.50
-            </Typography>
-            <Typography
-              variant="subtitle2"
-              sx={{ fontWeight: "bold", fontSize: "1.1rem" }}
-            >
-              Available: $8,441.69
-            </Typography>
-          </Box>
-        </Box>
+       {/* Mapping Accounts */}
+            {accounts.map((account)=>(
+              <Box
+                key={account.id}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  padding: "16px",
+                  borderBottom: "1px solid #ddd",
+                  bgcolor: "white",
+                  borderRadius: "8px",
+                }}
+              >
+                <Box sx={{ marginRight: "16px" }}>
+                  <img
+                    src={account.name === "Smart Access" ? "/creditcard2.svg" : "/creditcard1.svg"}
+                    alt={account.name}
+                    width={40}
+                    height={40}
+                  />
+                </Box>
+                <Box sx={{ flexGrow: 1 }}>
+                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                    {account.name}
+                  </Typography>
+                  <Typography variant="body2">{account.accountNumber}</Typography>
+                </Box>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <Typography
+                    variant="subtitle2"
+                    sx={{ fontSize: "1.1rem", marginRight: "60px" }}
+                  >
+                    Balance: ${account.balance.toFixed(2)}
+                  </Typography>
+                  <Typography
+                    variant="subtitle2"
+                    sx={{ fontWeight: "bold", fontSize: "1.1rem" }}
+                  >
+                    Available: ${account.availableBalance.toFixed(2)}
+                  </Typography>
+                </Box>
 
-        {/* StepPay Card */}
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            padding: "16px",
-            borderBottom: "1px solid #ddd",
-            bgcolor: "white",
-            borderRadius: "8px",
-          }}
-        >
-          <Box sx={{ marginRight: "16px" }}>
-            <img src="/creditcard1.svg" alt="StepPay" width={40} height={40} />
-          </Box>
-          <Box sx={{ flexGrow: 1 }}>
-            <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-              StepPay
-            </Typography>
-            <Typography variant="body2">5481 7190 0678 3171</Typography>
-          </Box>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Typography
-              variant="subtitle2"
-              sx={{ fontSize: "1.1rem", marginRight: "60px" }}
-            >
-              Balance: $0.00
-            </Typography>
-            <Typography
-              variant="subtitle2"
-              sx={{ fontWeight: "bold", fontSize: "1.1rem" }}
-            >
-              Available: $600.00
-            </Typography>
-          </Box>
-        </Box>
+              </Box>
+            ))}
       </Box>
-
       {/* Totals Section */}
       <Box sx={{ marginTop: "20px" }}>
         <Box
@@ -159,19 +187,19 @@ export default function DashboardPage() {
             <Typography variant="body1" sx={{ fontWeight: "bold" }}>
               Total Credits
             </Typography>
-            <Typography variant="h6">$8,616.50</Typography>
+            <Typography variant="h6">${totalCredits.toFixed(2)}</Typography>
           </Box>
           <Box sx={{ textAlign: "center" }}>
             <Typography variant="body1" sx={{ fontWeight: "bold" }}>
               Total Debits
             </Typography>
-            <Typography variant="h6">$0.00</Typography>
+            <Typography variant="h6">${totalDebits.toFixed(2)}</Typography>
           </Box>
           <Box sx={{ textAlign: "center" }}>
             <Typography variant="body1" sx={{ fontWeight: "bold" }}>
               Net Position
             </Typography>
-            <Typography variant="h6">$8,616.50</Typography>
+            <Typography variant="h6">${netPosition.toFixed(2)}</Typography>
           </Box>
         </Box>
       </Box>
@@ -226,7 +254,7 @@ export default function DashboardPage() {
         borderRadius: "8px",
       }}
     >
-      <QuickPay />
+      <QuickPay  accounts={accounts} onTransaction={handleTransaction}/>
     </Box>
   </Box>
 </Box>

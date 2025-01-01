@@ -10,6 +10,7 @@ import { AppBar, Toolbar,Typography, Container,
 import ThemeRegistry from "./ThemeRegistry";
 import Image from "next/image"
 import Link from "next/link";
+import Footer from "@/components/Footer";
 
 
 export const metadata: Metadata = {
@@ -116,6 +117,7 @@ export default function RootLayout({children,}: Readonly<{
       {/*Main Content holds all child */}
         <Box sx={{mt:0}}>{children}</Box>
         </ThemeRegistry>
+        <Footer/>
       </body>
     </html>
   );
