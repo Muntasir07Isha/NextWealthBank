@@ -63,7 +63,7 @@ return (
   {/* Greeting Section */}
   <Box
     sx={{
-      bgcolor: "#D1FFBD",
+      bgcolor: "#E7B649",
       padding: "66px 36px",
       boxSizing: "border-box",
       width: "100%",
@@ -226,12 +226,12 @@ return (
   <Button
     variant="text"
     sx={{
-      color: "green",
+      color: "#E7B649",
       fontWeight: "bold",
       fontSize: "1rem",
       textTransform: "capitalize",
       "&:hover": {
-        bgcolor: "#b3e09d", // Slightly darker shade on hover
+        bgcolor: "#E7B649", 
         color: "white",
       },
     }}
@@ -261,3 +261,4 @@ return (
 
   );
 }
+

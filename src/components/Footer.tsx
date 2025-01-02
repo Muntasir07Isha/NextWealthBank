@@ -72,18 +72,7 @@ export default function Footer() {
         <Typography variant="body2" color="textSecondary">
          NextWealth Bank is a Demo Bank App, Purpose of it too demontrates handling complex Calculations and UI with my Front End Skills.
         </Typography>
-        <Button
-          variant="contained"
-          sx={{
-            marginTop: "8px",
-            backgroundColor: "#0073e6",
-            color: "#fff",
-            fontWeight: "bold",
-            "&:hover": { backgroundColor: "#005bb5" },
-          }}
-        >
-          Give Feedback
-        </Button>
+
       </Box>
 
       {/* Footer Bottom */}

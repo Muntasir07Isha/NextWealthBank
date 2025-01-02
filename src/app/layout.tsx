@@ -11,6 +11,8 @@ import ThemeRegistry from "./ThemeRegistry";
 import Image from "next/image"
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import CustomCarousel from "@/components/PopularProduct";
+
 
 
 export const metadata: Metadata = {
@@ -33,7 +35,7 @@ export default function RootLayout({children,}: Readonly<{
                 <PrintIcon/>
               </IconButton>
     
-              <Box sx={{bgcolor:"#D1FFBD", px:2, py:0.5, borderRadius:1,}}>
+              <Box sx={{bgcolor:"#E7B649", px:2, py:0.5, borderRadius:1,}}>
               <Typography variant="h6" sx={{  color: "black",fontWeight:"bold", }}>
                 NetBank
               </Typography>
@@ -117,6 +119,7 @@ export default function RootLayout({children,}: Readonly<{
       {/*Main Content holds all child */}
         <Box sx={{mt:0}}>{children}</Box>
         </ThemeRegistry>
+        <CustomCarousel/>
         <Footer/>
       </body>
     </html>
