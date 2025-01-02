@@ -7,6 +7,7 @@ type Account = {
   balance: number;
   availableBalance: number;
   username:string;
+  pending:number,
 };
 
 const accounts: Account[] = [
@@ -16,7 +17,8 @@ const accounts: Account[] = [
     accountNumber: "046-660 1089 8201",
     balance: 8616.5,
     availableBalance: 8441.69,
-    username:"Muntasir"
+    username:"Muntasir",
+    pending: 400,
   },
   {
     id: 2,
@@ -24,7 +26,8 @@ const accounts: Account[] = [
     accountNumber: "5481 7190 0678 3171",
     balance: 300.0,
     availableBalance: 600.0,
-    username:"Muntasir-StepPAY"
+    username:"Muntasir-StepPAY",
+    pending: 0,
   },
 ];
 

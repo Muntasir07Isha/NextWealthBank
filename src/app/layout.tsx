@@ -12,7 +12,7 @@ import Image from "next/image"
 import Link from "next/link";
 import Footer from "@/components/Footer";
 import CustomCarousel from "@/components/PopularProduct";
-
+import { usePathname } from "next/navigation";
 
 
 export const metadata: Metadata = {
@@ -92,14 +92,20 @@ export default function RootLayout({children,}: Readonly<{
             height={84}
         
         />
+ <Link href="/">
       <Typography variant="button" sx={{ color: "black" }}>
         My Home
       </Typography>
-       </Box>
+  </Link>
 
-      <Typography variant="button" sx={{ color: "black" }}>
+       </Box>
+ <Link href="/view-accounts">
+      <Typography variant="button" sx={{ color: "black", cursor: "pointer" }}>
         View Accounts
       </Typography>
+</Link>
+
+
       <Typography variant="button" sx={{ color: "black" }}>
         Transfers & BPAY
       </Typography>
@@ -119,7 +125,7 @@ export default function RootLayout({children,}: Readonly<{
       {/*Main Content holds all child */}
         <Box sx={{mt:0}}>{children}</Box>
         </ThemeRegistry>
-        <CustomCarousel/>
+
         <Footer/>
       </body>
     </html>

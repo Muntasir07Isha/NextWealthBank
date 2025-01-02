@@ -10,10 +10,7 @@ type Account = {
   availableBalance: number;
 };
 
-type Recipient = {
-    id: number;
-    name: string;
-  };
+
 type QuickPayProps = {
   accounts: Account[];
   onTransaction: (firstAccount:string,amount:number) => void;
