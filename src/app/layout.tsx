@@ -13,7 +13,7 @@ import Link from "next/link";
 import Footer from "@/components/Footer";
 import CustomCarousel from "@/components/PopularProduct";
 import { usePathname } from "next/navigation";
-
+import { AccountProvider } from "@/context/AccountContext";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -27,10 +27,11 @@ export default function RootLayout({children,}: Readonly<{
     <html lang="en">
       <body style={{ margin: 0, padding: 0 }}>
         <ThemeRegistry>
-      <AppBar position="static" sx={{bgcolor: "#333333", margin:0,padding:0,height:"58px", }}>
-        <Toolbar sx={{ display:"flex",justifyContent: "space-between",alignItems:"center", padding:0,minHeight: 50, }}>
+        <AccountProvider> 
+        <AppBar position="static" sx={{bgcolor: "#333333", margin:0,padding:0,height:"58px", }}>
+          <Toolbar sx={{ display:"flex",justifyContent: "space-between",alignItems:"center", padding:0,minHeight: 50, }}>
         
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <IconButton sx={{marginLeft:1}} color="inherit">
                 <PrintIcon/>
               </IconButton>
@@ -123,10 +124,12 @@ export default function RootLayout({children,}: Readonly<{
 </AppBar>
 
       {/*Main Content holds all child */}
+  
         <Box sx={{mt:0}}>{children}</Box>
+      </AccountProvider> 
         </ThemeRegistry>
-
         <Footer/>
+  
       </body>
     </html>
   );

@@ -1,6 +1,7 @@
 "use client";
 import { Box, MenuItem, Select, Typography,TextField,Button } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useAccounts } from "@/context/AccountContext";
 
 type Account = {
   id: number;
@@ -13,11 +14,12 @@ type Account = {
 
 type QuickPayProps = {
   accounts: Account[];
-  onTransaction: (firstAccount:string,amount:number) => void;
+  onTransaction: (firstAccount:string,amount:number,) => void;
 }
   
 
-export default function QuickPay({ accounts, onTransaction }: QuickPayProps){
+export default function QuickPay() {
+  const { accounts, updateAccountBalance } = useAccounts();
   const [formAccount, setFormAccount] = useState<string>("");
   const [toAccount, setToAccount] = useState<string>("");
   const [amount, setAmount] = useState<string>("");
@@ -38,10 +40,19 @@ export default function QuickPay({ accounts, onTransaction }: QuickPayProps){
       return;
     }
 
-    onTransaction(formAccount, amountNumber);
-    alert(`Transferred $${amount} from ${formAccount} to ${toAccount}`);
+    // Deduct  amount
+    const fromAccount = accounts.find((account) => account.name === formAccount);
+    if (fromAccount) {
+      updateAccountBalance(fromAccount.id, -amountNumber);
+    }
 
- 
+
+    const toAccountObj = accounts.find((account) => account.name === toAccount);
+    if (toAccountObj) {
+      updateAccountBalance(toAccountObj.id, amountNumber);
+    }
+
+    alert(`Transferred $${amount} from ${formAccount} to ${toAccount}`);
     setFormAccount("");
     setToAccount("");
     setAmount("");
