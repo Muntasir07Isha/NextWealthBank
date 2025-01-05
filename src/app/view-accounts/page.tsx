@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Box, Typography, Tabs, Tab, Select, MenuItem, Button } from "@mui/material";
+import { Box, Typography, Tabs, Tab, Select, MenuItem, Button, Snackbar,Alert} from "@mui/material";
 import Transactions from "./components/Transaction";
 import { useAccounts } from "@/context/AccountContext";
 import { Balance } from "@mui/icons-material";
@@ -22,6 +22,11 @@ export default function ViewAccountsPage() {
   const [selectedAccountId, setSelectedAccountId] = useState<number | null>(null);
   const [activeTab, setActiveTab] = useState(0);
   const [salaryTransaction, setSalaryTransaction] = useState<Transaction | null>(null);
+  const [notification, setNotification] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
 
 
   useEffect(() => {
@@ -38,7 +43,7 @@ export default function ViewAccountsPage() {
 
   const handleReceiveSalary = () => {
     if (selectedAccountId) {
-      updateAccountBalance(selectedAccountId, 4000); // Add $3000 to the balance
+      updateAccountBalance(selectedAccountId, 4000); 
     
       const newSalaryTransaction = {
         date: new Date().toISOString().split("T")[0], 
@@ -50,6 +55,11 @@ export default function ViewAccountsPage() {
      
       };
       setSalaryTransaction(newSalaryTransaction);
+      setNotification({
+        open: true,
+        message: `Salary of $4000 has been added to ${selectedAccount?.name}`,
+        severity: "success",
+      });
     }
   };
 
@@ -62,15 +72,16 @@ export default function ViewAccountsPage() {
       <Box
         sx={{
           display: "flex",
-          flexDirection: "column",
+          flexDirection: { xs: "column", sm: "row" },
           justifyContent: "center",
           alignItems: "center",
-          marginBottom: "24px",
-          padding: "19px",
+          marginBottom: "16px",
+          padding: { xs: "10px", sm: "19px" },
           bgcolor: "white",
           borderRadius: "8px",
           boxShadow: 1,
           backgroundColor: "darkgoldenrod",
+          textAlign: "center",
         }}
       >
         {selectedAccount ? (
@@ -103,7 +114,8 @@ export default function ViewAccountsPage() {
               }}
               fullWidth
               sx={{
-                width: "600px",
+                width: "300px",
+                margin:"0 auto",
                 bgcolor: "white",
                 border: "1px solid #ddd",
                 borderRadius: "4px",
@@ -120,7 +132,7 @@ export default function ViewAccountsPage() {
             <Button
               variant="contained"
               onClick={() => handleReceiveSalary()}
-              sx={{ marginTop: "16px", bgcolor: " darkcyan", color: "white",border:"3px solid gold"}}
+              sx={{ marginTop: "16px", bgcolor: " darkcyan", color: "white",border:"2px solid gold",}}
             >
               Receive Salary
             </Button>
@@ -143,6 +155,20 @@ export default function ViewAccountsPage() {
         {activeTab === 1 && <Typography>Statements Content</Typography>}
         {activeTab === 2 && <Typography>Account Settings Content</Typography>}
       </Box>
+      <Snackbar
+        open={notification.open}
+        autoHideDuration={3000}
+        onClose={() => setNotification({ ...notification, open: false })}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => setNotification({ ...notification, open: false })}
+          severity={notification.severity as "success" | "error" | "info"}
+          sx={{ width: "100%" }}
+        >
+          {notification.message}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

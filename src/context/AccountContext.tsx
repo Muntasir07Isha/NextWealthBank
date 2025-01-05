@@ -15,6 +15,7 @@ type Account = {
 type AccountContextType = {
   accounts: Account[];
   updateAccountBalance: (accountId: number, amount: number) => void; // Update balance for a specific account
+  transferBetweenAccounts: (fromAccountId: number, toAccountId: number, amount: number) => void;
 };
 
 const AccountContext = createContext<AccountContextType | undefined>(undefined);
@@ -53,8 +54,30 @@ export const AccountProvider = ({ children }: { children: ReactNode }) => {
     );
   };
 
+  //trasfers between accounts
+const transferBetweenAccounts = (fromAccountId: number, toAccountId: number, amount: number) => {
+  setAccounts((prevAccounts)=>
+    prevAccounts.map((account)=>{
+      if (account.id===fromAccountId){
+        return{
+          ...account,
+          balance: account.balance - amount,
+          availableBalance: account.availableBalance - amount,
+        }
+      }else if(account.id === toAccountId){
+        return {
+          ...account,
+          balance: account.balance + amount,
+          availableBalance: account.availableBalance + amount,
+        };
+      }
+      return account;
+    })
+  )
+}
+
   return (
-    <AccountContext.Provider value={{ accounts, updateAccountBalance }}>
+    <AccountContext.Provider value={{ accounts, updateAccountBalance, transferBetweenAccounts }}>
       {children}
     </AccountContext.Provider>
   );

@@ -1,5 +1,5 @@
 "use client";
-import { Box, MenuItem, Select, Typography,TextField,Button } from "@mui/material";
+import { Box, MenuItem, Select, Typography,TextField,Button,Snackbar,Alert } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useAccounts } from "@/context/AccountContext";
 
@@ -23,6 +23,12 @@ export default function QuickPay() {
   const [formAccount, setFormAccount] = useState<string>("");
   const [toAccount, setToAccount] = useState<string>("");
   const [amount, setAmount] = useState<string>("");
+  const [notification, setNotification] = useState({ open: false, message: "", severity: "info" });
+
+const handleNotification  = (message:string, severity:"info" | "success" | "error") => {
+  setNotification({ open: true, message, severity });
+
+}
 
   const handleSubmit = () => {
     if (!formAccount || !toAccount || !amount) {
@@ -52,7 +58,7 @@ export default function QuickPay() {
       updateAccountBalance(toAccountObj.id, amountNumber);
     }
 
-    alert(`Transferred $${amount} from ${formAccount} to ${toAccount}`);
+    handleNotification(`Transferred $${amount} from ${formAccount} to ${toAccount}`, "success");
     setFormAccount("");
     setToAccount("");
     setAmount("");
@@ -123,6 +129,20 @@ return(
       >
         Submit
       </Button>
+      <Snackbar
+        open={notification.open}
+        autoHideDuration={5000}
+        onClose={() => setNotification({ ...notification, open: false })}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => setNotification({ ...notification, open: false })}
+          severity={notification.severity as "success" | "error" | "info"}
+          sx={{ width: "100%" }}
+        >
+          {notification.message}
+        </Alert>
+      </Snackbar>
     </Box>
 )
 }

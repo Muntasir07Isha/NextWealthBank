@@ -1,5 +1,6 @@
 "use client";
-import { Box, Typography, Table, TableHead, TableRow, TableCell, TableBody, TextField } from "@mui/material";
+import { Box, Typography, Table, TableHead, TableRow, Card, CardContent,
+  Divider,TableCell, TableBody, TextField } from "@mui/material";
 import { useState, useEffect } from "react";
 
 type Transaction = {
@@ -54,6 +55,7 @@ export default function Transactions({ accountId,salaryTransaction }: Transactio
   );
 
   return (
+    <>
     <Box>
       <TextField
         variant="standard"
@@ -61,10 +63,15 @@ export default function Transactions({ accountId,salaryTransaction }: Transactio
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         fullWidth
-        sx={{ marginBottom: "15px" }}
+        sx={{ marginBottom: "15px", 
+          display:{xs:"block", sm:"none"},
+        }}
+        placeholder="Search Transaction"
       />
       {/* Transaction Table */}
-      <Table>
+      <Table sx={{
+          display: { xs: "none", sm: "table" },
+      }}>
         <TableHead>
           <TableRow>
             <TableCell>Date</TableCell>
@@ -95,7 +102,53 @@ export default function Transactions({ accountId,salaryTransaction }: Transactio
           ))}
         </TableBody>
       </Table>
+      <Box
+        sx={{
+          display: { xs: "flex", sm: "none" },
+          flexDirection: "column",
+          gap: 2,
+        }}
+      >
+        {filteredTransactions.map((transaction, index) => (
+          <Card key={index} sx={{ boxShadow: 1 }}>
+            <CardContent>
+              <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                {transaction.description}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {transaction.date}
+              </Typography>
+              <Divider sx={{ my: 1 }} />
+              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                <Typography variant="body2">Debit: ${transaction.debit.toFixed(2)}</Typography>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: transaction.credit > 0 ? "green" : "inherit",
+                    fontWeight: transaction.credit > 0 ? "bold" : "normal",
+                  }}
+                >
+                  Credit: ${transaction.credit.toFixed(2)}
+                </Typography>
+              </Box>
+            </CardContent>
+          </Card>
+        ))}
+      </Box>
+
+
       {filteredTransactions.length === 0 && <Typography>No Transaction Found</Typography>}
     </Box>
+    <Box sx={{
+      marginTop:"30px",
+      color:"goldenrod"
+     
+    }}>
+        <Typography sx={{bgcolor:"ghost white"}}
+        
+        >Your Transactions End here</Typography>
+    </Box>
+    </>
   );
+
 }

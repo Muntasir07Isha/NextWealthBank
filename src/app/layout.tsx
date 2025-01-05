@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AppBar, Toolbar,Typography, Container,
-  IconButton,Box,InputBase } from "@mui/material";
+  IconButton,Box,InputBase,Drawer,List,ListItem,ListItemText,Button } from "@mui/material";
   import PrintIcon from "@mui/icons-material/Print";
   import SearchIcon from "@mui/icons-material/Search";
   import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
@@ -11,9 +11,9 @@ import ThemeRegistry from "./ThemeRegistry";
 import Image from "next/image"
 import Link from "next/link";
 import Footer from "@/components/Footer";
-import CustomCarousel from "@/components/PopularProduct";
-import { usePathname } from "next/navigation";
 import { AccountProvider } from "@/context/AccountContext";
+import ClientNavbar from "@/components/ClientNavbar";
+
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,116 +21,20 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({children,}: Readonly<{
-  children: React.ReactNode;
-}>) {
+  children: React.ReactNode;}>) {
+    
   return (
     <html lang="en">
-      <body style={{ margin: 0, padding: 0 }}>
+         <body>
         <ThemeRegistry>
-        <AccountProvider> 
-        <AppBar position="static" sx={{bgcolor: "#333333", margin:0,padding:0,height:"58px", }}>
-          <Toolbar sx={{ display:"flex",justifyContent: "space-between",alignItems:"center", padding:0,minHeight: 50, }}>
-        
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-              <IconButton sx={{marginLeft:1}} color="inherit">
-                <PrintIcon/>
-              </IconButton>
-    
-              <Box sx={{bgcolor:"#E7B649", px:2, py:0.5, borderRadius:1,}}>
-              <Typography variant="h6" sx={{  color: "black",fontWeight:"bold", }}>
-                NetBank
-              </Typography>
-              </Box>
-       </Box>
-              {/*Rightside of navbar with search and logout */}
-              <Box sx={{display:"flex", alignItems:"center", gap:2}} >
-              {/*search box */}
-              <Box
-                sx={{display:"flex",
-                  alignItems:"center",
-                  bgcolor:"white",
-                  borderRadius:1,
-                  px:1,
-                }}
-              >
-                <SearchIcon sx={{color:"#000"}}/>  {/*search box */}
-                <InputBase placeholder="search bank"/>
-              </Box>
-        <IconButton color="inherit">
-          <HelpOutlineIcon/>
-        </IconButton>
-        <IconButton color="inherit"> {/*Logout icon */}
-           <LogoutIcon />
-        </IconButton>
-        </Box>
-        </Toolbar>
-      </AppBar>
-      <AppBar
-  position="static"
-  sx={{
-    bgcolor: "#f1f0e8",
-    margin: 0,
-    padding: 0,
-    borderTop: "1px solid #ddd", 
-  }}
->
-  <Toolbar
-    sx={{
-      minHeight: 84, 
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-    }}
-  >
-    {/* Bottom Navigation Tabs */}
-    
-    <Box sx={{ display: "flex",alignItems:"center",  gap: 2 }}>
-       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }} >
-        <Image
-            src="/BankLogo.webp"
-            alt="logo"
-            width={94}
-            height={84}
-        
-        />
- <Link href="/">
-      <Typography variant="button" sx={{ color: "black" }}>
-        My Home
-      </Typography>
-  </Link>
-
-       </Box>
- <Link href="/view-accounts">
-      <Typography variant="button" sx={{ color: "black", cursor: "pointer" }}>
-        View Accounts
-      </Typography>
-</Link>
-
-
-      <Typography variant="button" sx={{ color: "black" }}>
-        Transfers & BPAY
-      </Typography>
-      <Typography variant="button" sx={{ color: "black" }}>
-        Offers & Apply
-      </Typography>
-      <Typography variant="button" sx={{ color: "black" }}>
-        Settings
-      </Typography>
-      <Typography variant="button" sx={{ color: "black" }}>
-        Inbox
-      </Typography>
-    </Box>
-  </Toolbar>
-</AppBar>
-
-      {/*Main Content holds all child */}
-  
-        <Box sx={{mt:0}}>{children}</Box>
-      </AccountProvider> 
+          <AccountProvider>
+            <ClientNavbar />
+            <main>{children}</main>
+            <Footer />
+          </AccountProvider>
         </ThemeRegistry>
-        <Footer/>
-  
       </body>
+
     </html>
   );
 }

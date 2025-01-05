@@ -115,6 +115,50 @@ export default function DashboardPage() {
                 <Typography variant="h6">${netPosition.toFixed(2)}</Typography>
               </Box>
             </Box>
+            <Box
+    sx={{
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginTop: "20px",
+      bgcolor: "#f9f9f9",
+      padding: "16px",
+      borderRadius: "8px",
+      boxShadow: 1,
+    }}
+  >
+    <Button
+      variant="text"
+      href="apply for new product?" 
+      sx={{
+        backgroundColor: "#E7B649",
+        color: "black",
+        fontWeight: "bold",
+        textTransform: "capitalize",
+        "&:hover": {
+          backgroundColor: "#D6A639",
+        },
+      }}
+    >
+      Apply for a New Product
+    </Button>
+
+    <Button
+      variant="contained"
+      href="/view-portfolio" 
+      sx={{
+        backgroundColor: "#E7B649",
+        color: "white",
+        fontWeight: "bold",
+        textTransform: "capitalize",
+        "&:hover": {
+          backgroundColor: "#D6A639",
+        },
+      }}
+    >
+      View Portfolio
+    </Button>
+  </Box>
           </Box>
         </Box>
 
