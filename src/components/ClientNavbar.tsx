@@ -109,9 +109,11 @@ export default function ClientNavbar() {
                 View Accounts
               </Typography>
             </Link>
+            <Link href="Transfers&BPAY">
             <Typography variant="button" sx={{ color: "black" }}>
               Transfers & BPAY
             </Typography>
+            </Link>
             <Typography variant="button" sx={{ color: "black" }}>
               Offers & Apply
             </Typography>
