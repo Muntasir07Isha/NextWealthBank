@@ -10,6 +10,13 @@ type Transaction = {
   category:string;
 };
 
+type CategoryTotals = {
+  [category:string]:{
+    debit:number;
+    credit:number;
+  }
+}
+
 const transactions: Transaction[] = [
     {
         id: 1,
@@ -26,7 +33,7 @@ const transactions: Transaction[] = [
         date: "2025-01-02",
         description: "Salary Deposit",
         debit: 0,
-        credit: 3000,
+        credit: 4000,
         category:"Income"
       },
       {
@@ -97,11 +104,76 @@ const transactions: Transaction[] = [
         id: 10,
         accountId: 1,
         date: "2025-01-09",
-        description: "Stock",
+        description: "JB HIFI",
         debit: 1000.0,
         credit: 0,
+        category:"Entertainment"
+      },
+      {
+        id: 11,
+        accountId: 1,
+        date: "2025-01-19",
+        description: "McDonalds",
+        debit: 11.50,
+        credit: 0,
+        category:"eating out"
+      },
+      {
+        id: 12,
+        accountId: 1,
+        date: "2025-01-29",
+        description: "KFC",
+        debit: 10,
+        credit: 0,
+        category:"eating out"
+      },
+      {
+        id: 13,
+        accountId: 1,
+        date: "2025-01-29",
+        description: "Stock",
+        debit: 37.50,
+        credit: 0,
+        category:"Shopping"
+      },
+      {
+        id: 14,
+        accountId: 1,
+        date: "2025-01-19",
+        description: "Mac Book",
+        debit: 1350.0,
+        credit: 0,
+        category:"Shopping"
+      },
+      {
+        id: 15,
+        accountId: 1,
+        date: "2025-01-07",
+        description: "Pizza Hut",
+        debit: 11.45,
+        credit: 0,
+        category:"eating out"
+      },
+      {
+        id: 16,
+        accountId: 1,
+        date: "2025-01-04",
+        description: "Stock",
+        debit: 175,
+        credit: 0,
+        category:"grocery"
+      },
+      {
+        id: 17,
+        accountId: 1,
+        date: "2025-01-09",
+        description: "Salary Deposit",
+        debit: 0,
+        credit: 4000,
         category:"Income"
       },
+
+
 ];
 
 export async function GET(request: Request) {
@@ -119,6 +191,21 @@ export async function GET(request: Request) {
   const filteredTransactions = accountId
     ? transactions.filter((transaction) => transaction.accountId === Number (accountId))
     : transactions;
+
+//function for category in chart
+const CategoryTotals: CategoryTotals = filteredTransactions.reduce((acc:CategoryTotals, transaction)=>{
+  const category = transaction.category;
+  if (!acc[category]){
+    acc[category] = { debit: 0, credit: 0 };
+  }
+  if (transaction.credit > 0) {
+    acc[category].credit += transaction.credit; 
+  } else {
+    acc[category].debit += transaction.debit; 
+  }
+  return acc;
+
+}, {} as CategoryTotals)
 
   return NextResponse.json(filteredTransactions);
 }

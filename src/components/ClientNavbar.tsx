@@ -114,11 +114,15 @@ export default function ClientNavbar() {
               Transfers & BPAY
             </Typography>
             </Link>
+            <Link href="Portfolio&Investment">
             <Typography variant="button" sx={{ color: "black" }}>
-              Offers & Apply
+              Portfolio & Investment
             </Typography>
+            </Link>
+
             <Typography variant="button" sx={{ color: "black" }}>
               Settings
+          
             </Typography>
             <Typography variant="button" sx={{ color: "black" }}>
               Inbox
@@ -146,7 +150,7 @@ export default function ClientNavbar() {
               <ListItemText primary="Transfers&BPAY" />
             </ListItemButton>
             <ListItemButton>
-              <ListItemText primary="Offers & Apply" />
+              <ListItemText primary="Portfolio & Investment" />
             </ListItemButton>
             <ListItemButton>
               <ListItemText primary="Settings" />

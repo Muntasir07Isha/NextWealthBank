@@ -67,7 +67,22 @@ export default function TransfersBPAY() {
   };
 
   return (
-    <Box>
+<Box sx={{
+  display:"flex",
+  justifyContent:"center",
+  alignItems:"center",
+  height:"100vh",
+  bgcolor:"#f5f5f5"
+}}>
+
+    <Box sx={{
+      width: "1300px", 
+      bgcolor: "white", 
+      boxShadow: 3,
+      borderRadius: "8px", 
+      overflow: "hidden",
+
+    }}>
       {/* Header */}
       <Box
         sx={{
@@ -85,7 +100,7 @@ export default function TransfersBPAY() {
 
       {/* Form Section */}
       <Box sx={{ padding: "16px", bgcolor: "#fff", borderRadius: "8px" }}>
-        {/* From Dropdown */}
+    
         <Box sx={{ marginBottom: "16px" }}>
           <Typography variant="subtitle1" sx={{ marginBottom: "8px" }}>
             From
@@ -105,7 +120,7 @@ export default function TransfersBPAY() {
           </Select>
         </Box>
 
-        {/* To Dropdown */}
+
         <Box sx={{ marginBottom: "16px", display: "flex", alignItems: "center" }}>
           <Box sx={{ flex: 1 }}>
             <Typography variant="subtitle1" sx={{ marginBottom: "8px" }}>
@@ -178,5 +193,6 @@ export default function TransfersBPAY() {
         ))}
       </Box>
     </Box>
+</Box>
   );
 }
