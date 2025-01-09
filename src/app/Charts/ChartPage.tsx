@@ -72,12 +72,11 @@ export default function ChartsPage() {
 
   return (
     <Box sx={{ padding: "16px", maxWidth: "900px", margin: "0 auto" }}>
-      {/* Header */}
       <Typography
-        variant="h4"
-        sx={{ fontWeight: "bold", marginBottom: "16px", textAlign: "center" }}
+        variant="h5"
+        sx={{ fontWeight: "bold", marginBottom: "16px", textAlign: "center", color:"ghostwhite", backgroundColor:"goldenrod" }}
       >
-        Income & Expense Summary
+        Income & Expense Portfolio
       </Typography>
 
       {/* Summary Section */}
@@ -108,7 +107,7 @@ export default function ChartsPage() {
               aria-controls={`panel-${category}-content`}
               id={`panel-${category}-header`}
             >
-              <Typography>
+              <Typography sx={{fontFamily:"Arial"}}>
                 {category}: $
                 {view === "expenses"
                   ? expenseBreakdown[category].toFixed(2)

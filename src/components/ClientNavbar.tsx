@@ -119,11 +119,11 @@ export default function ClientNavbar() {
               Portfolio & Investment
             </Typography>
             </Link>
-
+            <Link href="settings">
             <Typography variant="button" sx={{ color: "black" }}>
               Settings
-          
             </Typography>
+            </Link>
             <Typography variant="button" sx={{ color: "black" }}>
               Inbox
             </Typography>
@@ -149,11 +149,11 @@ export default function ClientNavbar() {
             <ListItemButton component={Link} href="/Transfers&BPAY">
               <ListItemText primary="Transfers&BPAY" />
             </ListItemButton>
-            <ListItemButton>
+            <ListItemButton component={Link} href="Portfolio&Investment">
               <ListItemText primary="Portfolio & Investment" />
             </ListItemButton>
             <ListItemButton>
-              <ListItemText primary="Settings" />
+              <ListItemText primary="settings" />
             </ListItemButton>
             <ListItemButton>
               <ListItemText primary="Inbox" />

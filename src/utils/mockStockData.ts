@@ -1,0 +1,51 @@
+export const mockStocks = [
+    {
+      id: 1,
+      logo: "public/stocks/apple.png",
+      symbol: "AAPL",
+      price: "152.32",
+      change: "+2.15",
+      percentage: "1.43",
+    },
+    {
+      id: 2,
+      logo: "public/stocks/meta.png",
+      symbol: "META",
+      price: "270.84",
+      change: "-1.27",
+      percentage: "-0.47",
+    },
+    {
+      id: 3,
+      logo: "/public/stocks/tesla.png",
+      symbol: "TSLA",
+      price: "731.50",
+      change: "+5.60",
+      percentage: "0.77",
+    },
+    {
+      id: 4,
+      logo: "public/stocks/Amazon.png",
+      symbol: "AMZN",
+      price: "121.89",
+      change: "-0.89",
+      percentage: "-0.74",
+    },
+    {
+      id: 5,
+      logo: "/public/stocks/Microsoft.png",
+      symbol: "MSFT",
+      price: "301.12",
+      change: "+3.40",
+      percentage: "1.15",
+    },
+    {
+        id: 6,
+        logo: "/public/stocks/google.png",
+        symbol: "GGL",
+        price: "311.12",
+        change: "+3.40",
+        percentage: "2.15",
+      },
+  ];
+  
