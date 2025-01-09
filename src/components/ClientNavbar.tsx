@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { AppBar, Toolbar, Typography, Box, IconButton, Drawer, List, ListItem, ListItemText, ListItemButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -9,9 +9,12 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function ClientNavbar() {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const { data: session } = useSession();
+  console.log("Session Data:", session);
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
@@ -52,7 +55,7 @@ export default function ClientNavbar() {
             <MenuIcon />
           </IconButton>
 
-          {/* Right Side (Search and Icons for Desktop) */}
+         
           <Box
             sx={{
               display: { xs: "none", md: "flex" },
@@ -77,9 +80,20 @@ export default function ClientNavbar() {
             <IconButton color="inherit">
               <HelpOutlineIcon />
             </IconButton>
-            <IconButton color="inherit">
-              <LogoutIcon />
-            </IconButton>
+
+            <IconButton
+  color="inherit"
+  onClick={() =>
+    session
+      ? signOut({ callbackUrl: "/login" }) // Redirect to /login after logging out
+      : signIn("google", { callbackUrl: "/" }) // Redirect to / after logging in
+  }
+>
+  <LogoutIcon />
+</IconButton>
+
+
+
           </Box>
         </Toolbar>
       </AppBar>
@@ -132,35 +146,48 @@ export default function ClientNavbar() {
       </AppBar>
 
       {/* Mobile Drawer */}
-      <Drawer anchor="right" open={drawerOpen} onClose={handleDrawerToggle}>
-        <Box sx={{ width: 250 }} role="presentation" onClick={handleDrawerToggle}>
-          <List>
-            <ListItemButton>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <Image src="/BankLogo.webp" alt="logo" width={94} height={84} />
-              </Box>
-            </ListItemButton>
-            <ListItemButton component={Link} href="/">
-              <ListItemText primary="My Home" />
-            </ListItemButton>
-            <ListItemButton component={Link} href="/view-accounts">
-              <ListItemText primary="View Accounts" />
-            </ListItemButton>
-            <ListItemButton component={Link} href="/Transfers&BPAY">
-              <ListItemText primary="Transfers&BPAY" />
-            </ListItemButton>
-            <ListItemButton component={Link} href="Portfolio&Investment">
-              <ListItemText primary="Portfolio & Investment" />
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemText primary="settings" />
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemText primary="Inbox" />
-            </ListItemButton>
-          </List>
+<Drawer anchor="right" open={drawerOpen} onClose={handleDrawerToggle}>
+  <Box sx={{ width: 250 }} role="presentation" onClick={handleDrawerToggle}>
+    <List>
+      <ListItemButton>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <Image src="/BankLogo.webp" alt="logo" width={94} height={84} />
         </Box>
-      </Drawer>
+      </ListItemButton>
+      <ListItemButton component={Link} href="/">
+        <ListItemText primary="My Home" />
+      </ListItemButton>
+      <ListItemButton component={Link} href="/view-accounts">
+        <ListItemText primary="View Accounts" />
+      </ListItemButton>
+      <ListItemButton component={Link} href="/Transfers&BPAY">
+        <ListItemText primary="Transfers & BPAY" />
+      </ListItemButton>
+      <ListItemButton component={Link} href="Portfolio&Investment">
+        <ListItemText primary="Portfolio & Investment" />
+      </ListItemButton>
+      <ListItemButton component={Link} href="settings">
+        <ListItemText primary="Settings" />
+      </ListItemButton>
+      <ListItemButton>
+        <ListItemText primary="Inbox" />
+      </ListItemButton>
+      {/* Login/Logout Button */}
+      <ListItemButton
+        onClick={() =>
+          session
+            ? signOut({ callbackUrl: "/login" }) 
+            : signIn("google", { callbackUrl: "/" }) 
+        }
+      >
+        <ListItemText
+          primary={session ? "Logout" : "Login with Google"} 
+        />
+      </ListItemButton>
+    </List>
+  </Box>
+</Drawer>
+
     </>
   );
 }
