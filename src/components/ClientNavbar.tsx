@@ -14,7 +14,6 @@ import { useSession, signIn, signOut } from "next-auth/react";
 export default function ClientNavbar() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { data: session } = useSession();
-  console.log("Session Data:", session);
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
@@ -85,8 +84,8 @@ export default function ClientNavbar() {
   color="inherit"
   onClick={() =>
     session
-      ? signOut({ callbackUrl: "/login" }) // Redirect to /login after logging out
-      : signIn("google", { callbackUrl: "/" }) // Redirect to / after logging in
+      ? signOut({ callbackUrl: "/login" }) 
+      : signIn("google", { callbackUrl: "/" }) 
   }
 >
   <LogoutIcon />
@@ -113,34 +112,84 @@ export default function ClientNavbar() {
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <Image src="/BankLogo.webp" alt="logo" width={94} height={84} />
               <Link href="/">
-                <Typography variant="button" sx={{ color: "black" }}>
+                <Typography variant="button" sx={{
+                   color: "black", 
+                   textDecoration: "none",
+                   fontWeight: "bold",
+                   "&:hover": {
+                  color: "#E7B649",
+                    textDecoration: "underline", 
+                            },
+                   }}>
                   My Home
                 </Typography>
               </Link>
             </Box>
             <Link href="/view-accounts">
-              <Typography variant="button" sx={{ color: "black", cursor: "pointer" }}>
-                View Accounts
-              </Typography>
+            <Typography variant="button" sx={{
+                   color: "black", 
+                   textDecoration: "none",
+                   fontWeight: "bold",
+                   "&:hover": {
+                  color: "#E7B649",
+                    textDecoration: "underline", 
+                            },
+                   }}>
+                  View Account
+                </Typography>
             </Link>
             <Link href="Transfers&BPAY">
-            <Typography variant="button" sx={{ color: "black" }}>
-              Transfers & BPAY
-            </Typography>
+            <Typography variant="button" sx={{
+                   color: "black", 
+                   textDecoration: "none",
+                   fontWeight: "bold",
+                   "&:hover": {
+                  color: "#E7B649",
+                    textDecoration: "underline", 
+                            },
+                   }}>
+                    Transafers&BPAY
+                </Typography>
             </Link>
             <Link href="Portfolio&Investment">
-            <Typography variant="button" sx={{ color: "black" }}>
-              Portfolio & Investment
-            </Typography>
+            <Typography variant="button" sx={{
+                   color: "black", 
+                   textDecoration: "none",
+                   fontWeight: "bold",
+                   "&:hover": {
+                  color: "#E7B649",
+                    textDecoration: "underline", 
+                            },
+                   }}>
+                  Portfolio&Investment
+                </Typography>
             </Link>
             <Link href="settings">
-            <Typography variant="button" sx={{ color: "black" }}>
-              Settings
-            </Typography>
+            <Typography variant="button" sx={{
+                   color: "black", 
+                   textDecoration: "none",
+                   fontWeight: "bold",
+                   "&:hover": {
+                  color: "#E7B649",
+                    textDecoration: "underline", 
+                            },
+                   }}>
+                  Settings
+                </Typography>
             </Link>
-            <Typography variant="button" sx={{ color: "black" }}>
-              Inbox
-            </Typography>
+
+            
+            <Typography variant="button" sx={{
+                   color: "black", 
+                   textDecoration: "none",
+                   fontWeight: "bold",
+                   "&:hover": {
+                  color: "#E7B649",
+                    textDecoration: "underline", 
+                            },
+                   }}>
+                  Inbox
+                </Typography>
           </Box>
         </Toolbar>
       </AppBar>
