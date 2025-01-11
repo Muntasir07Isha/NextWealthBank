@@ -52,6 +52,7 @@ export default function DashboardPage() {
                 sx={{
                   display: "flex",
                   alignItems: "center",
+                  justifyContent:"space-between",
                   padding: "16px",
                   borderBottom: "1px solid #ddd",
                   bgcolor: "white",
@@ -70,13 +71,17 @@ export default function DashboardPage() {
                   <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
                     {account.name}
                   </Typography>
-                  <Typography variant="body2">{account.accountNumber}</Typography>
+                  <Typography variant="body2" sx={{ whiteSpace: "nowrap" }}>
+                    {account.accountNumber}
+                    
+                  </Typography>
                 </Box>
-                <Box sx={{ display: "flex", alignItems: "center" }}>
+
+                <Box sx={{ display: "flex", alignItems: "flex-end",flexDirection:"column" }}>
                   <Typography variant="subtitle2" sx={{ fontSize: "1.1rem", marginRight: "30px" }}>
                     Balance: ${account.balance.toFixed(2)}
                   </Typography>
-                  <Typography variant="subtitle2" sx={{ fontWeight: "bold", fontSize: "1.1rem" }}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: "bold", fontSize: "1.1rem",color:"Green" }}>
                     Available: ${account.availableBalance.toFixed(2)}
                   </Typography>
                 </Box>

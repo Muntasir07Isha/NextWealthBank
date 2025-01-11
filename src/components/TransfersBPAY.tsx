@@ -10,11 +10,13 @@ import {
   Tabs,
   Tab,
   IconButton,
+  Snackbar,
+  Alert
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { useState, useEffect } from "react";
-import { useAccounts } from "@/context/AccountContext";
+import { useAccounts,} from "@/context/AccountContext";
 
 type Recipient = {
   id: number;
@@ -24,12 +26,17 @@ type Recipient = {
 };
 
 export default function TransfersBPAY() {
-  const { accounts } = useAccounts();
+  const { accounts,transferBetweenAccounts } = useAccounts();
   const [recipients, setRecipients] = useState<Recipient[]>([]);
   const [fromAccountId, setFromAccountId] = useState<number | null>(null);
   const [toRecipientId, setToRecipientId] = useState<number | null>(null);
   const [transferAmount, setTransferAmount] = useState<string>("");
   const [activeTab, setActiveTab] = useState(0);
+
+  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
+  const [snackbarMessage, setSnackbarMessage] = useState<string>("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">("success");
+
 
   // Fetch recipients dynamically
   useEffect(() => {
@@ -49,22 +56,39 @@ export default function TransfersBPAY() {
 
   const handleTransfer = () => {
     if (!fromAccountId || !toRecipientId || !transferAmount) {
-      alert("Please fill in all fields");
+      showSnackbar("Please fill in all fields","error");
       return;
     }
 
     const amount = parseFloat(transferAmount);
     if (isNaN(amount) || amount <= 0) {
-      alert("Enter a valid amount");
+      showSnackbar("Enter a valid amount","error");
       return;
     }
 
-    alert(`Transferred $${amount} successfully`);
+//use global context
+transferBetweenAccounts(fromAccountId,toRecipientId,amount);
+
+
+    showSnackbar(`Transferred $${amount} successfully`,"success");
   };
 
   const handleDeleteRecipient = (id: number) => {
     setRecipients((prev) => prev.filter((recipient) => recipient.id !== id));
+    showSnackbar("Recipient deleted successfully", "error");
   };
+
+const showSnackbar = (message: string, severity: "success" | "error") => {
+  setSnackbarMessage(message);
+  setSnackbarSeverity(severity);
+  setSnackbarOpen(true);
+};
+const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+
+
+
 
   return (
 <Box sx={{
@@ -193,6 +217,17 @@ export default function TransfersBPAY() {
         ))}
       </Box>
     </Box>
+    <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: "100%" }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
 </Box>
+
   );
 }

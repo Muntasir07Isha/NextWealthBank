@@ -73,6 +73,7 @@ return(
               alignItems: "center",
               cursor: "pointer",
               boxShadow: "0px 4px 8px rgba(0,0,0,0.2)",
+              zIndex:1000,
             }}
         
         >
