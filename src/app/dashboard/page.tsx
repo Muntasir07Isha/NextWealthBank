@@ -57,6 +57,7 @@ export default function DashboardPage() {
                   borderBottom: "1px solid #ddd",
                   bgcolor: "white",
                   borderRadius: "8px",
+                  gap:"17px"
                 }}
               >
                 <Box sx={{ marginRight: "16px" }}>
