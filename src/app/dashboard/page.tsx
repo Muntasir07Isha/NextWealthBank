@@ -73,7 +73,7 @@ export default function DashboardPage() {
                   <Typography variant="body2">{account.accountNumber}</Typography>
                 </Box>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <Typography variant="subtitle2" sx={{ fontSize: "1.1rem", marginRight: "60px" }}>
+                  <Typography variant="subtitle2" sx={{ fontSize: "1.1rem", marginRight: "30px" }}>
                     Balance: ${account.balance.toFixed(2)}
                   </Typography>
                   <Typography variant="subtitle2" sx={{ fontWeight: "bold", fontSize: "1.1rem" }}>
@@ -145,7 +145,7 @@ export default function DashboardPage() {
 
     <Button
       variant="contained"
-      href="/view-portfolio" 
+      href="/Portfolio&Investment" 
       sx={{
         backgroundColor: "#E7B649",
         color: "white",

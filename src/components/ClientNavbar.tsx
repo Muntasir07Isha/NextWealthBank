@@ -178,7 +178,7 @@ export default function ClientNavbar() {
                 </Typography>
             </Link>
 
-            
+          <Link href="inbox">
             <Typography variant="button" sx={{
                    color: "black", 
                    textDecoration: "none",
@@ -190,6 +190,7 @@ export default function ClientNavbar() {
                    }}>
                   Inbox
                 </Typography>
+            </Link>
           </Box>
         </Toolbar>
       </AppBar>
@@ -218,7 +219,7 @@ export default function ClientNavbar() {
       <ListItemButton component={Link} href="settings">
         <ListItemText primary="Settings" />
       </ListItemButton>
-      <ListItemButton>
+      <ListItemButton component={Link} href="inbox" >
         <ListItemText primary="Inbox" />
       </ListItemButton>
       {/* Login/Logout Button */}
