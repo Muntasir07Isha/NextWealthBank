@@ -10,13 +10,6 @@ type Transaction = {
   category:string;
 };
 
-type CategoryTotals = {
-  [category:string]:{
-    debit:number;
-    credit:number;
-  }
-}
-
 const transactions: Transaction[] = [
     {
         id: 1,
@@ -193,19 +186,7 @@ export async function GET(request: Request) {
     : transactions;
 
 //function for category in chart
-const CategoryTotals: CategoryTotals = filteredTransactions.reduce((acc:CategoryTotals, transaction)=>{
-  const category = transaction.category;
-  if (!acc[category]){
-    acc[category] = { debit: 0, credit: 0 };
-  }
-  if (transaction.credit > 0) {
-    acc[category].credit += transaction.credit; 
-  } else {
-    acc[category].debit += transaction.debit; 
-  }
-  return acc;
 
-}, {} as CategoryTotals)
 
   return NextResponse.json(filteredTransactions);
 }

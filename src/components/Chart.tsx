@@ -3,7 +3,23 @@ import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Tooltip, Lege
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
-export default function Chart({ transactions }) {
+type Transaction = {
+  id: number;
+  accountId: number;
+  date: string;
+  description: string;
+  debit: number;
+  credit: number;
+  category: string;
+};
+
+type ChartProps = {
+  transactions: Transaction[];
+};
+
+
+
+export default function Chart({ transactions }:ChartProps) {
   const categories = [...new Set(transactions.map((t) => t.category))];
   const incomeData = categories.map(
     (category) =>

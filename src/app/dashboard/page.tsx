@@ -1,20 +1,16 @@
 "use client";
-
+import Image from "next/image";
 import { Box, Typography, Button } from "@mui/material";
 import QuickPay from "./quickPay";
 import { useAccounts } from "@/context/AccountContext";
 
 export default function DashboardPage() {
-  const { accounts, updateAccountBalance } = useAccounts();
+  const { accounts } = useAccounts();
   const totalCredits = accounts.reduce((sum, account) => sum + account.balance, 0);
   const totalDebits = 0;
   const netPosition = totalCredits - totalDebits;
 
-  // Handle transactions using the context
-  const handleTransaction = (fromAccountId: number, amount: number) => {
-    updateAccountBalance(fromAccountId, -amount); // Deduct the amount from the selected account
-  };
-
+ 
   return (
     <Box sx={{ position: "relative", marginTop: 0, width: "100%" }}>
       {/* Greeting Section */}
@@ -61,7 +57,7 @@ export default function DashboardPage() {
                 }}
               >
                 <Box sx={{ marginRight: "16px" }}>
-                  <img
+                  <Image
                     src={account.name === "Smart Access" ? "/creditcard2.svg" : "/creditcard1.svg"}
                     alt={account.name}
                     width={40}

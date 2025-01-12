@@ -1,23 +1,9 @@
 "use client";
 import { Box, MenuItem, Select, Typography,TextField,Button,Snackbar,Alert } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAccounts } from "@/context/AccountContext";
 
-type Account = {
-  id: number;
-  name: string;
-  accountNumber: string;
-  balance: number;
-  availableBalance: number;
-};
-
-
-type QuickPayProps = {
-  accounts: Account[];
-  onTransaction: (firstAccount:string,amount:number,) => void;
-}
   
-
 export default function QuickPay() {
   const { accounts, updateAccountBalance } = useAccounts();
   const [formAccount, setFormAccount] = useState<string>("");

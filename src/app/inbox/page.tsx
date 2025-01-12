@@ -45,7 +45,7 @@ export default function InboxPage() {
   };
 
   return (
-    <div style={{ maxWidth: "600px", margin: "20px auto", fontFamily: "Arial, sans-serif" }}>
+    <div style={{ maxWidth: "500px", margin: "20px auto", fontFamily: "Arial, sans-serif", width:"80%" }}>
 
       <div
         style={{

@@ -2,9 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { Box, Typography, Tabs, Tab, Select, MenuItem, Button, Snackbar,Alert} from "@mui/material";
-import Transactions from "./components/Transaction";
+import Transactions from "./Transaction";
 import { useAccounts } from "@/context/AccountContext";
-import { Balance } from "@mui/icons-material";
 
 type Transaction = {
   date: string;
