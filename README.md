@@ -31,7 +31,12 @@ A professional-looking banking application with features that simulate real-worl
 
 ### Prerequisites
 - Node.js installed on your machine
+- Set up environment variables: Create a .env.   local file in the root directory and add:
 - API keys for Google OAuth and Hugging Face
+- GOOGLE_CLIENT_ID=your-google-client-id
+    GOOGLE_CLIENT_SECRET=your-google-client-secret
+    NEXTAUTH_URL=http://localhost:3000
+    HUGGING_FACE_API_KEY=your-huggingface-api-key
 
 ### Installation
 1. Clone the repository:
